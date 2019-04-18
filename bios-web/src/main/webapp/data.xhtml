@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/html"
+                template="/resources/templates/default.xhtml">
+    <ui:define name="title"><h:outputText value="#{dataBean.title}"/></ui:define>
+    <ui:define name="content">
+        <f:form rendered="#{not empty dataBean.dept}" >
+            <h:messages/>
+            <p:poll interval="30" listener="#{dataBean.process}" update="@form" />
+            <p:panel style="margin-bottom: 10px;">
+                <h:outputText value="#{dataBean.title}"/>
+                <h:outputText value="#{dataBean.timeValue}" style="margin-left: 10px;vertical-align: sub;font-size: x-small;" id="timeValue"/>
+            </p:panel>
+            <p:commandButton value="Обновить" action="#{dataBean.process}" update="@form"/>
+            <p:dataTable rendered="#{not empty dataBean.eventDtos}" var="ev" value="#{dataBean.eventDtos}">
+                <p:column headerText="Сотрудник">
+                    <h:outputText value="#{ev.lastName} #{ev.firstName}"/>
+                </p:column>
+                <p:column headerText="Событие">
+                    <h:outputText value="#{ev.eventKind.label}"/>
+                </p:column>
+                <p:column headerText="Время">
+                    <h:outputText value="#{ev.dateLocalValue}"/>
+                </p:column>
+            </p:dataTable>
+        </f:form>
+        <p:panel rendered="#{empty dataBean.dept}">
+            <h:outputText value="ссылка некорректная!" style="font-weight: bold; color: red;"/>
+        </p:panel>
+    </ui:define>
+</ui:composition>

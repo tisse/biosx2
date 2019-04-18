@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/resources/templates/default.xhtml">
+    <ui:define name="title"><h:outputText value="#{mailTestBean.title}"/></ui:define>
+    <ui:define name="content">
+        <div class="ui-g-12 ui-md-4">
+            <h:form>
+                <p:growl id="messages" showDetail="true" closable="true"/>
+                <p:panel>
+                    <h:outputText value="Рассылка почты включена" style="color: green; margin-right: 10px;" rendered="#{mailTestBean.mailEnabled}"/>
+                    <p:commandButton value="Выключить" rendered="#{mailTestBean.mailEnabled}" action="#{mailTestBean.mailDisable}" update="@form"/>
+
+                    <h:outputText value="Рассылка почты выключена" style="color: red; margin-right: 10px;" rendered="#{not mailTestBean.mailEnabled}"/>
+                    <p:commandButton value="Включить"  rendered="#{not mailTestBean.mailEnabled}" action="#{mailTestBean.mailEnable}" update="@form"/>
+
+                    <p:commandButton value="Проверить"  style="margin-left: 10px;" action="#{mailTestBean.mailTest}" update="@form"/>
+
+                </p:panel>
+
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/resources/templates/default.xhtml">
+    <ui:define name="content">
+        <h:form>
+            <p:commandButton value="Mail test" action="#{mailTestBean.mailTest}"/>
+        </h:form>
+        <p:dataTable value="#{mailAddressBean.mailAddresses}" var="ma">
+            <p:column>
+                <h:outputText value="#{ma.depId}"/>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{ma.mail}"/>
+            </p:column>
+        </p:dataTable>
+    </ui:define>
+</ui:composition>

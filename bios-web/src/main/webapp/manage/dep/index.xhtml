@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/resources/templates/default.xhtml">
+    <ui:define name="content">
+
+        <p:panel style="margin-bottom: 10px;" header="Загрузить">
+            <h:form enctype="multipart/form-data">
+                <p:growl id="messageUpload" showDetail="true"/>
+                <p:fileUpload value="#{depBean.file}" mode="simple" skinSimple="true" allowTypes="/(\.|\/)(xlsx)$/"
+                              style="margin-right: 10px;"/>
+                <p:commandButton value="Подразделения" ajax="false" action="#{depBean.upload}" style="margin-right: 10px;"/>
+                <p:commandButton value="Почтовые адреса" ajax="false" action="#{depBean.uploadMails}"/>
+            </h:form>
+        </p:panel>
+        <h:form>
+            <p:growl id="messages" showDetail="true"/>
+            <p:panel style="margin-bottom: 10px;">
+                <p:commandButton value="Восстановить" update="@form" action="#{depBean.restore}"
+                                 style="margin-right: 10px;"/>
+                <p:commandButton value="Сохранить" update="@form" action="#{depBean.save}" style="margin-right: 10px;"/>
+                <p:commandButton value="Использовать" update="@form" action="#{depBean.assign}"/>
+            </p:panel>
+
+            <p:dataTable value="#{depBean.depInfos}" var="dep">
+                <p:column headerText="guid">
+                    <h:outputText value="#{dep.uuid}"/>
+                </p:column>
+                <p:column headerText="name">
+                    <h:outputText value="#{dep.name}"/>
+                </p:column>
+                <p:column headerText="shift" style="text-align: right; padding-right: 5px;">
+                    <h:outputText value="#{dep.timeShift}"/>
+                </p:column>
+                <p:column headerText="mails">
+                    <p:dataList value="#{dep.mails}" var="mail" rendered="#{not empty dep.mails}">
+                        <h:outputText value="#{mail}" style="margin-right: 10p;"/>
+                    </p:dataList>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
